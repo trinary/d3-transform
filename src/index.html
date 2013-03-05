@@ -3,15 +3,16 @@
   <head>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="/d3-transform.js"></script>
+    <script src="http://localhost:9001/ws"></script>
   </head>
   <body>
     <div><svg></svg></div>
+    <script>
+      var dat = [10,20,30];
+      var d = d3.select("svg");
+      d.classed("asdf",true);
+      d.selectAll(".x").data(dat).enter().append("rect").classed("x",true).translate(10,20);
+      d.select("svg").transform();
+    </script>
   </body>
-  <script>
-    var dat = [10,20,30];
-    var d = d3.select("svg");
-    d.classed("asdf",true);
-    d.selectAll(".x").data(dat).enter().append("rect").classed("x",true).transform()
-    d.select("rect").transform()
-  </script>
 </html>
