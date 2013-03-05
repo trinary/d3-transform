@@ -18,7 +18,7 @@ This syntax seems awkward and is something I find myself doing all the time.  I'
 
 Even better, in CoffeeScript:
 
-    d3.selecAll "g.label"
+    d3.selectAll "g.label"
       .translate((d) -> [20,d.x+10])
       .rotate(40)
       .scale((d)-> [d.size,2])
