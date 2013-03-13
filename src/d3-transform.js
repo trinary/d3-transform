@@ -7,16 +7,16 @@
     return this;
   };
   function d3_transform_attr(type) {
-    var args = Array.prototype.slice.call(arguments);
-    var values  = [];
-    for (var i = 0 ; var m = ++i; i< args.length) { 
-      if(typeof args[i] === "function") {
-        values[i] = args[i]
+    return function() {
+      var args = Array.prototype.slice.call(arguments);
+      var values  = [];
+      args.shift();
+      for (var i = 0 ; i< args.length ;) { 
+        if(typeof args[i] === "function") {
+          values[i] = 3 // hmm
+        }
       }
+      console.log(values);
     }
-    args.shift();
-    console.log(args);
-    function transformConstant() { this.setAttribute("transform", type + "(" + args + ") "); }
-    function transformFunction() { var x = arg }
   }
 })();
