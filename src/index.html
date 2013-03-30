@@ -11,7 +11,7 @@
       var dat = [10,20,30];
       var d = d3.select("svg");
       d.classed("asdf",true);
-      d.selectAll(".x").data(dat).enter().append("rect").classed("x",true).translate([5,5]).translate(function(d,i) { return [d,d];});
+      d.selectAll(".x").data(dat).enter().append("rect").classed("x",true).translate([5,5]).translate(function(d,i) { return [d,i];});
       d.selectAll(".y").data(dat).enter().append("rect").classed("y",true).translate(function(d,i){return [10,20];});
     </script>
   </body>
