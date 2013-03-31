@@ -1,0 +1,31 @@
+{
+  "name": "d3-transform",
+  "version": "0.0.0",
+  "description": "addon to d3.js that wraps SVG transforms into an API",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "vows"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/trinary/d3-transform.git"
+  },
+  "keywords": [
+    "d3",
+    "d3.js",
+    "transform",
+    "translate",
+    "rotate"
+  ],
+  "author": "Erik Cunningham <djtrinary@gmail.com>",
+  "license": "BSD",
+  "gitHead": "794cb60372515943256c5ca6f2d9ae2ba57ab0be",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "vows": "~0.7.0",
+    "d3": "~3.1.4"
+  }
+}
