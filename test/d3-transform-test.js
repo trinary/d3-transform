@@ -11,7 +11,6 @@ vows.describe('d3-transform').addBatch({
     "for a simple 2-element translate": {
       topic: function() { return d3.select("svg").selectAll(".x").data([1,2,3]).enter().append("rect").translate([10,10]) },
       "we get a thing": function(topic) {
-        console.log(topic);
         assert.equal(topic,1);
       }
     }
