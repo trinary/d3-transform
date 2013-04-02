@@ -1,18 +1,22 @@
-
 var vows = require('vows'),
     assert = require('assert'),
-    jsdom = require('jsdom'),
-    d3 = require('d3');
-    translate = require("../src/d3-transform.js");
+    jsdom = require('jsdom');
+
+/*
+ * Don't require d3 in a var declaration so the name is available to
+ * d3-transform. This makes it global, which should probably be avoided but
+ * ???
+ */
+d3 = require('d3');
+var transform = require("../src/d3-transform.js");
 
 vows.describe('d3-transform').addBatch({
-  'when transforming a thing': {
-    topic: jsdom.jsdom("<html><head></head><body><svg></svg></body></html>"),
-    "for a simple 2-element translate": {
-      topic: function() { return d3.select("svg").selectAll(".x").data([1,2,3]).enter().append("rect").translate([10,10]) },
-      "we get a thing": function(topic) {
-        assert.equal(topic,1);
-      }
+  'the initial object' : {
+    topic : function() {
+      return d3.svg.transform();
+    },
+    'is an identity transform' : function(topic) {
+      assert.equal(topic(), "");
     }
   }
 }).export(module);
