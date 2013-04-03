@@ -9,22 +9,29 @@ When wanting to do multiple translations on a particular element in a d3 selecti
     d3.selectAll("g.label")
       .attr("transform",function(d,i) {return "translate(20,"+ d.x * 10) rotate (40) scale("+d.size+"2)")})
 
-This syntax seems awkward and is something I find myself doing all the time.  I'd prefer this:
+There was a simple implementation based on extending d3.selection, but [@seliopou](https://github.com/seliopou) has proposed and implemented an improved version that defines the d3.svg.transform object, and works like this:
 
+    var transform = d3.svg.transform()
+      .translate(10,20)
+
+The transform object allows you to specify your transformations with a composable API, save them as their own variables, and apply them to d3 selections like this:
+
+    var transform = d3.svg.transform()
+      .translate(10,20)
     d3.selectAll("g.label")
-      .translate(function(d) { return [20,d.x*10]})
-      .rotate(40)
-      .scale(function(d) {return [d.size,2]})
+      .attr("transform",transform) /* g.label elements are given a transform attribute of "translate(10,20)" */
 
-Even better, in CoffeeScript:
+A function can be passed which is expected to return an array of arguments to the transform definition, which will be applied to each element based on its data binding:
 
-    d3.selectAll "g.label"
-      .translate((d) -> [20,d.x+10])
-      .rotate(40)
-      .scale((d)-> [d.size,2])
+    var transform = d3.svg.transform()
+      .translate(function(d,i) {return [i * 10, d];})
+    d3.selectAll("g.box")
+    .attr("transform", transform) /* data bound to the g.box elements get passed into the translate function, and the result is applied to the transform attribute */
 
-This d3 plugin adds that syntax to d3 selections. The goal is to keep it compatible with transitions and allow chained transformations that operate as you'd expect with a clearer, more readable syntax.
+The function must return the required number of arguments for the transform definition it applies to.
 
+All of the SVG 1.1 transform operations are supported.  Matrix, translate, rotate, skewX, skewY, and scale.
 
+Using these objects reduces repetition, allows composition of multiple transforms, and removes ugly string-interpolation of an attribute used in nearly every d3 visualization.
 
-[1]: https://developer.mozilla.org/en-US/docs/SVG/Attribute/transform "Transform"
+[1]: https://developer.mozilla.org/en-US/docs/SVG/Attribute/transform "Transform://developer.mozilla.org/en-US/docs/SVG/Attribute/transform "Transform"
