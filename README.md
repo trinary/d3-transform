@@ -26,7 +26,7 @@ A function can be passed which is expected to return an array of arguments to th
     var transform = d3.svg.transform()
       .translate(function(d,i) {return [i * 10, d];})
     d3.selectAll("g.box")
-    .attr("transform", transform) /* data bound to the g.box elements get passed into the translate function, and the result is applied to the transform attribute */
+      .attr("transform", transform) /* data bound to the g.box elements get passed into the translate function, and the result is applied to the transform attribute */
 
 The function must return the required number of arguments for the transform definition it applies to.
 
