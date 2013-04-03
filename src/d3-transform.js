@@ -24,10 +24,12 @@
       }).join(' ');
     };
 
-    my.translate = function() {
-      push('translate', arr(arguments));
-      return my;
-    };
+    ['translate', 'rotate', 'scale', 'matrix', 'skewX', 'skewY'].forEach(function(t) {
+      my[t] = function() {
+        push(t, arr(arguments));
+        return my;
+      };
+    });
     
     return my;
   };

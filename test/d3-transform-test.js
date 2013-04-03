@@ -44,5 +44,13 @@ vows.describe('d3-transform').addBatch({
 
       assert.equal(transform(8), 'translate(8,13)');
     }
+  },
+  'composing transforms' : {
+    'works' : function() {
+      var transform = d3.svg.transform()
+          .translate(1, 1)
+          .rotate(2);
+      assert.equal(transform(), 'translate(1,1) rotate(2)');
+    }
   }
 }).export(module);
