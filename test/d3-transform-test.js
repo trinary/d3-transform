@@ -43,6 +43,13 @@ vows.describe('d3-transform').addBatch({
           .translate(function(x) { return [x, 13]; });
 
       assert.equal(transform(8), 'translate(8,13)');
+    },
+    'works for a function argument, as a method' : function() {
+      var transform = d3.svg.transform()
+          .translate(function() { return [this.x, 34]; });
+      var cxt = { 'x' : 21 };
+
+      assert.equal(transform.call(cxt), 'translate(21,34)');
     }
   },
   'composing transforms' : {
