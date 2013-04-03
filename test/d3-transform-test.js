@@ -18,5 +18,31 @@ vows.describe('d3-transform').addBatch({
     'is an identity transform' : function(topic) {
       assert.equal(topic(), "");
     }
+  },
+  'calling translate' : {
+    'works for one argument' : function() {
+      var transform = d3.svg.transform()
+          .translate(1);
+
+      assert.equal(transform(), 'translate(1)');
+    },
+    'works for two arguments' : function() {
+      var transform = d3.svg.transform()
+          .translate(1, 2);
+
+      assert.equal(transform(), 'translate(1,2)');
+    },
+    'works for a function argument' : function() {
+      var transform = d3.svg.transform()
+          .translate(function() { return [3, 5]; });
+
+      assert.equal(transform(), 'translate(3,5)');
+    },
+    'works for a function argument, given arguments' : function() {
+      var transform = d3.svg.transform()
+          .translate(function(x) { return [x, 13]; });
+
+      assert.equal(transform(8), 'translate(8,13)');
+    }
   }
 }).export(module);
