@@ -1,4 +1,6 @@
-# d3-transform
+# D3-Transform
+
+## Purpose
 
 Very frequently while writing d3 to manipulate SVG elements, you end up needing to set a particular attribute: [transform][1]. This very handy attribute wraps up a bunch of 2d transformation operations, presented as a formatted string:
 
@@ -21,6 +23,8 @@ There was a simple implementation based on extending d3.selection, but [@seliopo
 var transform = d3.svg.transform()
   .translate(10, 20);
 ```
+
+## Usage
 
 The transform object allows you to specify your transformations with a composable API, save them as their own variables, and apply them to d3 selections like this:
 
@@ -45,6 +49,18 @@ d3.selectAll("g.box")
 The function must return the required number of arguments for the transform definition it applies to.
 
 All of the SVG 1.1 transform operations are supported.  Matrix, translate, rotate, skewX, skewY, and scale.
+
+## Composition
+
+If you want to extend one transform with another set of operations, pass the initial transform object into transform().
+
+```javascript
+var transform1 = d3.svg.transform()
+  .translate(10,20);
+var transform2 = d3.svg.transform(transform1)
+  .scale(function(d) { return [d.size];})
+/* transform1() evaluates to "translate(10,20)". transform2({size:5}) evaluates to "translate(10,20) scale(5)" */
+```
 
 Using these objects reduces repetition, allows composition of multiple transforms, and removes ugly string-interpolation of an attribute used in nearly every d3 visualization.
 
