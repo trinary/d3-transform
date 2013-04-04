@@ -59,5 +59,25 @@ vows.describe('d3-transform').addBatch({
           .rotate(2);
       assert.equal(transform(), 'translate(1,1) rotate(2)');
     }
+  },
+  'composing multiple transform objects' : {
+    'works' : function() {
+      var t1 = d3.svg.transform()
+        .translate(1,1)
+        .rotate(2)
+      var t2 = d3.svg
+        .transform(t1)
+        .scale(3,3);
+      assert.equal(t2(),"translate(1,1) rotate(2) scale(3,3)");
+    },
+    'works with functions at any point' : function() {
+      var t1 = d3.svg.transform()
+        .translate(function(d) { return [d,1];})
+        .rotate(2)
+      var t2 = d3.svg
+        .transform(t1)
+        .scale(function(d) { return [d+1,4];});
+      assert.equal(t2(10),"translate(10,1) rotate(2) scale(11,4)");
+    }
   }
 }).export(module);
