@@ -1,6 +1,7 @@
 (function() {
-  d3.svg.transform = function() {
+  d3.svg.transform = function(chain) {
     var transforms = [];
+    if (chain !== undefined) { transforms.push(chain) }
 
     function push(kind, args) {
       var n = args.length;
@@ -30,7 +31,7 @@
         return my;
       };
     });
-    
+
     return my;
   };
 })();
