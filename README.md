@@ -11,7 +11,7 @@ When wanting to do multiple translations on a particular element in a d3 selecti
 ```javascript
 d3.selectAll("g.label")
   .attr("transform", function(d, i) {
-    return "translate(20," + d.x * 10 + ") rotate (40) scale(" + d.size + "2)")
+    return "translate(20," + d.x * 10 + ") rotate (40) scale(" + d.size + "2)");
   });
 ```
 
@@ -19,27 +19,27 @@ There was a simple implementation based on extending d3.selection, but [@seliopo
 
 ```javascript
 var transform = d3.svg.transform()
-  .translate(10, 20)
+  .translate(10, 20);
 ```
 
 The transform object allows you to specify your transformations with a composable API, save them as their own variables, and apply them to d3 selections like this:
 
 ```javascript
 var transform = d3.svg.transform()
-  .translate(10, 20)
+  .translate(10, 20);
 
 d3.selectAll("g.label")
-  .attr("transform", transform) /* g.label elements are given a transform attribute of "translate(10,20)" */
+  .attr("transform", transform); /* g.label elements are given a transform attribute of "translate(10,20)" */
 ```
 
 A function can be passed which is expected to return an array of arguments to the transform definition, which will be applied to each element based on its data binding:
 
 ```javascript
 var transform = d3.svg.transform()
-  .translate(function(d,i) {return [i * 10, d];})
+  .translate(function(d, i) { return [i * 10, d]; });
 
 d3.selectAll("g.box")
-  .attr("transform", transform) /* data bound to the g.box elements get passed into the translate function, and the result is applied to the transform attribute */
+  .attr("transform", transform); /* data bound to the g.box elements get passed into the translate function, and the result is applied to the transform attribute */
 ```
 
 The function must return the required number of arguments for the transform definition it applies to.
