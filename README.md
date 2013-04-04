@@ -32,8 +32,16 @@ The transform object allows you to specify your transformations with a composabl
 var transform = d3.svg.transform()
   .translate(10, 20);
 
-d3.selectAll("g.label")
-  .attr("transform", transform); /* g.label elements are given a transform attribute of "translate(10,20)" */
+d3.select('svg').append('g')
+    .attr("transform", transform);
+```
+
+This will produce a document that looks like this:
+
+```xml
+<svg>
+  <g transform="translate(10,20)></g>
+</svg>
 ```
 
 A function can be passed which is expected to return an array of arguments to the transform definition, which will be applied to each element based on its data binding:
@@ -42,8 +50,20 @@ A function can be passed which is expected to return an array of arguments to th
 var transform = d3.svg.transform()
   .translate(function(d, i) { return [i * 10, d]; });
 
-d3.selectAll("g.box")
-  .attr("transform", transform); /* data bound to the g.box elements get passed into the translate function, and the result is applied to the transform attribute */
+d3.select('svg').selectAll("g")
+    .data([15, 30, 45])
+  .enter().append('g')
+    .attr("transform", transform);
+```
+
+The result is a document that looks like this:
+
+```xml
+<svg>
+  <g transform="translate(0,15)"></g>
+  <g transform="translate(10,30)"></g>
+  <g transform="translate(20,45)"></g>
+</svg>
 ```
 
 The function must return the required number of arguments for the transform definition it applies to.
@@ -57,9 +77,23 @@ If you want to extend one transform with another set of operations, pass the ini
 ```javascript
 var transform1 = d3.svg.transform()
   .translate(10,20);
+
 var transform2 = d3.svg.transform(transform1)
   .scale(function(d) { return [d.size];})
-/* transform1() evaluates to "translate(10,20)". transform2({size:5}) evaluates to "translate(10,20) scale(5)" */
+
+d3.select('svg').selectAll('g')
+    .data([{ 'size' : 5 }, { 'size' : 10 }])
+  .enter().append('g')
+    .attr('transform', transform2);
+```
+
+The result is a document that looks like this:
+
+````xml
+<svg>
+  <g transform="translate(10,20) scale(5)"></g>
+  <g transform="translate(10,20) scale(10)"></g>
+</svg>
 ```
 
 Using these objects reduces repetition, allows composition of multiple transforms, and removes ugly string-interpolation of an attribute used in nearly every d3 visualization.
