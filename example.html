@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="/src/d3-transform.js"></script>
+    <script>
+      var t1 = d3.svg.transform().translate(1,1).rotate(10).skewX(function(d) { return [d]});
+      var t2 = d3.svg.transform(t1).scale(function(d) { return [d,d];})
+      console.log(t1(1));
+      console.log(t2(2));
+    </script>
+  </head>
+  <body>
+    <svg></svg>
+  </body>
+</html>
