@@ -1,6 +1,5 @@
 var vows = require('vows'),
-    assert = require('assert'),
-    jsdom = require('jsdom');
+    assert = require('assert');
 
 /*
  * Don't require d3 in a var declaration so the name is available to
