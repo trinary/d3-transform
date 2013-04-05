@@ -100,4 +100,4 @@ The result is a document that looks like this:
 [2]: http://d3js.org
 [3]: https://twitter.com/trinary
 [4]: https://twitter.com/seliopou
-[5]: http://www.w3.org/TR/SVG/coords.html#TransformAttribute
+[5]: http://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#TransformAttribute
