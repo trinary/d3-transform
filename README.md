@@ -56,12 +56,12 @@ In both cases the resulting document will look the same:
 
 All of the SVG 1.1 transform operations are supported:
 
-    * `matrix`
-    * `rotate`
-    * `translate`
-    * `scale`
-    * `skewX`
-    * `skewY`
+* `matrix`
+* `rotate`
+* `translate`
+* `scale`
+* `skewX`
+* `skewY`
 
 You can specify arguments for these operations by either providing positional
 arguments to the corresponding method of the transform object, or by providing
