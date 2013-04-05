@@ -54,23 +54,15 @@ In both cases the resulting document will look the same:
 </svg>
 ```
 
-All of the SVG 1.1 transform operations are supported:
-
-* `matrix`
-* `rotate`
-* `translate`
-* `scale`
-* `skewX`
-* `skewY`
-
 You can specify arguments for these operations by either providing positional
 arguments to the corresponding method of the transform object, or by providing
 a function that will return an array of arguments that are interpreted as
 positional arguments. In the special case where an operation only takes one
 argument, your function can return a number.
 
-See the [SVG 1.1 Specification][1] for further details on the arguments of each
-operation.
+All of the SVG 1.1 transform operations are supported: `matrix`, `rotate`,
+`translate`, `scale`, `skewX`, and `skewY`. See the [SVG 1.1 Specification][1]
+for further details on the arguments of each operation.
 
 ### Composition
 
