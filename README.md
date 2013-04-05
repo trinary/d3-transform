@@ -1,67 +1,103 @@
 # D3-Transform
 
-## Purpose
+d3-transform makes it easy to define and reuse functions that produce
+[transform][1] attribute strings for SVG elements. Using d3-transform reduces
+repetition, allows you to compose multiple transforms, and elminiates ugly
+string-interpolation from your d3 visualization code.
 
-Very frequently while writing d3 to manipulate SVG elements, you end up needing to set a particular attribute: [transform][1]. This very handy attribute wraps up a bunch of 2d transformation operations, presented as a formatted string:
+## Installation
 
-```
-translate(20,20) rotate(90) skewX(15)
-```
+Include d3-transform in your web page using a script time any time after you've
+included [d3][2]:
 
-When wanting to do multiple translations on a particular element in a d3 selection operation, one often has to merge a few of these things together into a single string so that an attr() call works:
-
-```javascript
-d3.selectAll("g.label")
-  .attr("transform", function(d, i) {
-    return "translate(20," + d.x * 10 + ") rotate (40) scale(" + d.size + "2)");
-  });
-```
-
-There was a simple implementation based on extending d3.selection, but [@seliopou](https://github.com/seliopou) has proposed and implemented an improved version that defines the d3.svg.transform object, and works like this:
-
-```javascript
-var transform = d3.svg.transform()
-  .translate(10, 20);
+```html
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="/path/to/d3-transform.js"></script>
 ```
 
 ## Usage
 
-The transform object allows you to specify your transformations with a composable API, save them as their own variables, and apply them to d3 selections like this:
+d3-transform replaces the manual construction of transform attribute strings
+for SVG elements. For example, if you want to translate, rotate, and scale a
+`group` element depending on the data bound to that element, you'd write
+something like this without d3-transform:
+
+```javascript
+d3.select('svg').selectAll('g')
+    .data([{ 'size' : 5 }, { 'size' : 10 }])
+  .enter().append('g')
+    .attr('transform', function(d, i) {
+      return "translate(20," + d.x * 10 + ") rotate (40) scale(" + d.size + "2)");
+    });
+```
+
+With d3-transform, you can rewrite the above code like this:
 
 ```javascript
 var transform = d3.svg.transform()
-  .translate(10, 20);
+    .translate(function(d) { return [20, d.x * 10]; })
+    .rotate(40)
+    .scale(function(d) { return d.size });
 
-d3.selectAll("g.label")
-  .attr("transform", transform); /* g.label elements are given a transform attribute of "translate(10,20)" */
+d3.select('svg').select('g')
+    .data([{ 'size' : 5 }, { 'size' : 10 }])
+  .enter().append('g')
+    .attr('transform', transform);
 ```
 
-A function can be passed which is expected to return an array of arguments to the transform definition, which will be applied to each element based on its data binding:
+In both cases the resulting document will look the same:
 
-```javascript
-var transform = d3.svg.transform()
-  .translate(function(d, i) { return [i * 10, d]; });
-
-d3.selectAll("g.box")
-  .attr("transform", transform); /* data bound to the g.box elements get passed into the translate function, and the result is applied to the transform attribute */
+````xml
+<svg>
+  <g transform="translate(10,20) rotate(40) scale(5)"></g>
+  <g transform="translate(10,20) rotate(40) scale(10)"></g>
+</svg>
 ```
 
-The function must return the required number of arguments for the transform definition it applies to.
+You can specify arguments for these operations by either providing positional
+arguments to the corresponding method of the transform object, or by providing
+a function that will return an array of arguments that are interpreted as
+positional arguments. In the special case where an operation only takes one
+argument, your function can return a number.
 
-All of the SVG 1.1 transform operations are supported.  Matrix, translate, rotate, skewX, skewY, and scale.
+All of the SVG 1.1 transform operations are supported: `matrix`, `rotate`,
+`translate`, `scale`, `skewX`, and `skewY`. See the [SVG 1.1 Specification][5]
+or [MDN][1] for further details on the arguments of each operation.
 
-## Composition
+### Composition
 
-If you want to extend one transform with another set of operations, pass the initial transform object into transform().
+If you want to extend one transform with another set of operations, pass the
+initial transform object into the `d3.svg.transform()` function:
 
 ```javascript
 var transform1 = d3.svg.transform()
   .translate(10,20);
+
 var transform2 = d3.svg.transform(transform1)
   .scale(function(d) { return [d.size];})
-/* transform1() evaluates to "translate(10,20)". transform2({size:5}) evaluates to "translate(10,20) scale(5)" */
+
+d3.select('svg').selectAll('g')
+    .data([{ 'size' : 5 }, { 'size' : 10 }])
+  .enter().append('g')
+    .attr('transform', transform2);
 ```
 
-Using these objects reduces repetition, allows composition of multiple transforms, and removes ugly string-interpolation of an attribute used in nearly every d3 visualization.
+The result is a document that looks like this:
+
+````xml
+<svg>
+  <g transform="translate(10,20) scale(5)"></g>
+  <g transform="translate(10,20) scale(10)"></g>
+</svg>
+```
+
+## Contributors
+
+* Erik Cunningham ([@trinary][3])
+* Spiros Eliopoulos ([@seliopou][4])
 
 [1]: https://developer.mozilla.org/en-US/docs/SVG/Attribute/transform "Transform://developer.mozilla.org/en-US/docs/SVG/Attribute/transform "Transform"
+[2]: http://d3js.org
+[3]: https://twitter.com/trinary
+[4]: https://twitter.com/seliopou
+[5]: http://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#TransformAttribute
