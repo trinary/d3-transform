@@ -61,8 +61,8 @@ positional arguments. In the special case where an operation only takes one
 argument, your function can return a number.
 
 All of the SVG 1.1 transform operations are supported: `matrix`, `rotate`,
-`translate`, `scale`, `skewX`, and `skewY`. See the [SVG 1.1 Specification][1]
-for further details on the arguments of each operation.
+`translate`, `scale`, `skewX`, and `skewY`. See the [SVG 1.1 Specification][5]
+or [MDN][1] for further details on the arguments of each operation.
 
 ### Composition
 
@@ -100,3 +100,4 @@ The result is a document that looks like this:
 [2]: http://d3js.org
 [3]: https://twitter.com/trinary
 [4]: https://twitter.com/seliopou
+[5]: http://www.w3.org/TR/SVG/coords.html#TransformAttribute
