@@ -55,6 +55,7 @@ In both cases the resulting document will look the same:
 ```
 
 All of the SVG 1.1 transform operations are supported:
+
     * `matrix`
     * `rotate`
     * `translate`
