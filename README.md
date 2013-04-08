@@ -48,7 +48,7 @@ var svg = d3.select('svg.example1').selectAll('g')
 
 In both cases the resulting document will look the same:
 
-````html
+```html
 <svg>
   <g transform="translate(20,50) rotate(40) scale(7)"></g>
   <g transform="translate(20,100) rotate(40) scale(12)"></g>
@@ -85,7 +85,7 @@ d3.select('svg.example2').selectAll('g')
 
 The result is a document that looks like this:
 
-````html
+```html
 <svg>
   <g transform="translate(10,20) scale(5)"></g>
   <g transform="translate(10,20) scale(10)"></g>
