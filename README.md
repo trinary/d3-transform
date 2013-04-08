@@ -2,12 +2,12 @@
 
 d3-transform makes it easy to define and reuse functions that produce
 [transform][1] attribute strings for SVG elements. Using d3-transform reduces
-repetition, allows you to compose multiple transforms, and elminiates ugly
+repetition, allows you to compose multiple transforms, and eliminates ugly
 string-interpolation from your d3 visualization code.
 
 ## Installation
 
-Include d3-transform in your web page using a script time any time after you've
+Include d3-transform in your web page using a script tag any time after you've
 included [d3][2]:
 
 ```html
