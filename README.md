@@ -24,7 +24,7 @@ something like this without d3-transform:
 
 ```javascript
 d3.select('svg').selectAll('g')
-    .data([{ 'size' : 5 }, { 'size' : 10 }])
+    .data([{ size: 5 }, { size: 10 }])
   .enter().append('g')
     .attr('transform', function(d, i) {
       return "translate(20," + d.size * 10 + ") rotate (40) scale(" + d.size + "2)");
@@ -35,13 +35,14 @@ With d3-transform, you can rewrite the above code like this:
 
 ```javascript
 var transform = d3.svg.transform()
-    .translate(function(d) { return [20, d.size * 10]; })
+    .translate(function(d) { return [20, d.size * 10] })
     .rotate(40)
     .scale(function(d) { return d.size + 2 });
 
-d3.select('svg').select('g')
-    .data([{ 'size' : 5 }, { 'size' : 10 }])
-  .enter().append('g')
+var svg = d3.select('svg.example1').selectAll('g')
+    .data([{ size: 5 }, { size: 10 }])
+    .enter()
+    .append('g')
     .attr('transform', transform);
 ```
 
@@ -76,8 +77,8 @@ var transform1 = d3.svg.transform()
 var transform2 = d3.svg.transform(transform1)
   .scale(function(d) { return [d.size];})
 
-d3.select('svg').selectAll('g')
-    .data([{ 'size' : 5 }, { 'size' : 10 }])
+d3.select('svg.example2').selectAll('g')
+    .data([{ size: 5 }, { size: 10 }])
   .enter().append('g')
     .attr('transform', transform2);
 ```
