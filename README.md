@@ -27,7 +27,7 @@ d3.select('svg').selectAll('g')
     .data([{ 'size' : 5 }, { 'size' : 10 }])
   .enter().append('g')
     .attr('transform', function(d, i) {
-      return "translate(20," + d.x * 10 + ") rotate (40) scale(" + d.size + "2)");
+      return "translate(20," + d.size * 10 + ") rotate (40) scale(" + d.size + "2)");
     });
 ```
 
@@ -35,9 +35,9 @@ With d3-transform, you can rewrite the above code like this:
 
 ```javascript
 var transform = d3.svg.transform()
-    .translate(function(d) { return [20, d.x * 10]; })
+    .translate(function(d) { return [20, d.size * 10]; })
     .rotate(40)
-    .scale(function(d) { return d.size });
+    .scale(function(d) { return d.size + 2 });
 
 d3.select('svg').select('g')
     .data([{ 'size' : 5 }, { 'size' : 10 }])
@@ -49,8 +49,8 @@ In both cases the resulting document will look the same:
 
 ````xml
 <svg>
-  <g transform="translate(10,20) rotate(40) scale(5)"></g>
-  <g transform="translate(10,20) rotate(40) scale(10)"></g>
+  <g transform="translate(20,50) rotate(40) scale(5)"></g>
+  <g transform="translate(20,100) rotate(40) scale(10)"></g>
 </svg>
 ```
 
