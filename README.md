@@ -96,6 +96,10 @@ The result is a document that looks like this:
 * Erik Cunningham ([@trinary][3])
 * Spiros Eliopoulos ([@seliopou][4])
 
+## License
+
+MIT, see LICENSE.txt for details.
+
 [1]: https://developer.mozilla.org/en-US/docs/SVG/Attribute/transform "Transform://developer.mozilla.org/en-US/docs/SVG/Attribute/transform "Transform"
 [2]: http://d3js.org
 [3]: https://twitter.com/trinary
