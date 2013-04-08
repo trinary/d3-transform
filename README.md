@@ -49,8 +49,8 @@ In both cases the resulting document will look the same:
 
 ````xml
 <svg>
-  <g transform="translate(20,50) rotate(40) scale(5)"></g>
-  <g transform="translate(20,100) rotate(40) scale(10)"></g>
+  <g transform="translate(20,50) rotate(40) scale(7)"></g>
+  <g transform="translate(20,100) rotate(40) scale(12)"></g>
 </svg>
 ```
 
