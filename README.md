@@ -92,6 +92,24 @@ The result is a document that looks like this:
 </svg>
 ```
 
+When using node, require('d3-transform') returns a direct reference to the "transform" method.
+
+```javascript
+var d3 = require('d3');
+var d3Transform = require('d3-transform');
+
+var transform = d3Transform()
+    .translate(function(d) { return [20, d.size * 10] })
+    .rotate(40)
+    .scale(function(d) { return d.size + 2 });
+
+var svg = d3.select('svg.example1').selectAll('g')
+    .data([{ size: 5 }, { size: 10 }])
+    .enter()
+    .append('g')
+    .attr('transform', transform);
+```
+
 ## Contributors
 
 * Erik Cunningham ([@trinary][3])

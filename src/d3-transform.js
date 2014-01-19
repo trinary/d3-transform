@@ -1,5 +1,5 @@
-(function() {
-  d3.svg.transform = function(chain) {
+(function(globals) {
+  function d3Transform(chain) {
     var transforms = [];
     if (chain !== undefined) { transforms.push(chain) }
 
@@ -33,5 +33,18 @@
     });
 
     return my;
-  };
-})();
+  }
+
+  // Add the "transform" method to d3.svg if d3.svg is defined.
+  if (typeof d3 !== 'undefined' && d3.svg) {
+      d3.svg.transform = d3Transform;
+  }
+
+  // Export the "transform" method if module.exports is defined, otherwise add it to the global namespace as d3Transform.
+  if (typeof module !== 'undefined' && module.exports) {
+      module.exports = d3Transform;
+  }  else {
+      globals.d3Transform = d3Transform;
+  }
+
+})(this);
