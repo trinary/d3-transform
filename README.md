@@ -65,6 +65,25 @@ All of the SVG 1.1 transform operations are supported: `matrix`, `rotate`,
 `translate`, `scale`, `skewX`, and `skewY`. See the [SVG 1.1 Specification][5]
 or [MDN][1] for further details on the arguments of each operation.
 
+When using node.js, calls to require('d3-transform') return a direct reference to the "transform" method.
+
+```javascript
+var d3 = require('d3');
+var d3Transform = require('d3-transform');
+
+var transform = d3Transform()
+    .translate(function(d) { return [20, d.size * 10] })
+    .rotate(40)
+    .scale(function(d) { return d.size + 2 });
+
+var svg = d3.select('svg.example1').selectAll('g')
+    .data([{ size: 5 }, { size: 10 }])
+    .enter()
+    .append('g')
+    .attr('transform', transform);
+```
+
+
 ### Composition
 
 If you want to extend one transform with another set of operations, pass the
