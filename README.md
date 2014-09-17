@@ -27,7 +27,7 @@ d3.select('svg').selectAll('g')
     .data([{ size: 5 }, { size: 10 }])
   .enter().append('g')
     .attr('transform', function(d, i) {
-      return "translate(20," + d.size * 10 + ") rotate (40) scale(" + d.size + "2)");
+      return "translate(20," + d.size * 10 + ") rotate (40) scale(" + ( d.size + 2 ) + ")");
     });
 ```
 
