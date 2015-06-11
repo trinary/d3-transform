@@ -11,7 +11,7 @@ Include d3-transform in your web page using a script tag any time after you've
 included [d3][2]:
 
 ```html
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
 <script src="/path/to/d3-transform.js"></script>
 ```
 
@@ -39,7 +39,7 @@ var transform = d3.svg.transform()
     .rotate(40)
     .scale(function(d) { return d.size + 2 });
 
-var svg = d3.select('svg.example1').selectAll('g')
+var svg = d3.select('svg').selectAll('g')
     .data([{ size: 5 }, { size: 10 }])
     .enter()
     .append('g')
