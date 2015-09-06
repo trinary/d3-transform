@@ -7,8 +7,12 @@
       var n = args.length;
 
       transforms.push(function() {
-        return kind + '(' + (n == 1 && typeof args[0] == 'function'
-            ? args[0].apply(this, arr(arguments)) : args) + ')';
+        if (kind == 'seq') {
+          return args.map(function (f) { return f(); }).join(' ')
+        } else {
+          return kind + '(' + (n == 1 && typeof args[0] == 'function'
+              ? args[0].apply(this, arr(arguments)) : args) + ')';
+        }
       });
     };
 
@@ -25,7 +29,7 @@
       }).join(' ');
     };
 
-    ['translate', 'rotate', 'scale', 'matrix', 'skewX', 'skewY'].forEach(function(t) {
+    ['translate', 'rotate', 'scale', 'matrix', 'skewX', 'skewY', 'seq'].forEach(function(t) {
       my[t] = function() {
         push(t, arr(arguments));
         return my;
