@@ -102,7 +102,21 @@ d3.select('svg.example2').selectAll('g')
     .attr('transform', transform2);
 ```
 
-The result is a document that looks like this:
+Another way to compose multiple transform objects is to use the `seq`
+operation:
+
+```javascript
+var transform1 = d3.svg.transform()
+  .translate(10,20);
+
+var transform2 = d3.svg.transform()
+  .scale(function(d) { return [d.size];})
+
+var transform =
+  transform1.seq(transform2);
+```
+
+With either of these approaches, the result is a document that looks like this:
 
 ```html
 <svg>
