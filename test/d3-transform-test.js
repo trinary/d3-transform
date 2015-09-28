@@ -70,5 +70,31 @@ vows.describe('d3-transform').addBatch({
         .scale(function(d) { return [d+1,4];});
       assert.equal(t2(10),"translate(10,1) rotate(2) scale(11,4)");
     }
+  },
+  'composing via seq()' : {
+    'works' : function() {
+      var t1 = d3Transform()
+        .translate(1,1);
+      var t2 = d3Transform()
+        .translate(-1,-1);
+      var seq = t1.seq(t2);
+      assert.equal(seq(), "translate(1,1) translate(-1,-1)");
+    },
+    'works with functions' : function() { 
+      var t1 = d3Transform()
+        .translate([1,1]);
+      var t2 = d3Transform()
+        .translate(function(d) { return [1,d]; });
+      var seq = t1.seq(t2);
+      assert.equal(seq(5), "translate(1,1) translate(1,5)");
+    },
+    'works with functions at any point' : function() {
+      var t1 = d3Transform()
+        .translate(function(d) { return [d,1]; });
+      var t2 = d3Transform()
+        .translate(function(d) { return [1,d]; });
+      var seq = t1.seq(t2);
+      assert.equal(seq(5), "translate(5,1) translate(1,5)");
+    }
   }
 }).export(module);
