@@ -21,7 +21,7 @@
     "rotate"
   ],
   "author": "Erik Cunningham <djtrinary@gmail.com>",
-  "license": "BSD",
+  "license": "MIT",
   "gitHead": "794cb60372515943256c5ca6f2d9ae2ba57ab0be",
   "readmeFilename": "README.md",
   "devDependencies": {
