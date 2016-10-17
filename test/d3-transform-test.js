@@ -1,100 +1,83 @@
-var vows = require('vows'),
-    assert = require('assert');
+var tape = require("tape"),
+  t = require("../");
 
-var d3Transform = require("..");
+tape('is an identity transform by default', function(test) {
+  var tr = t.transform();
+  test.equal(tr(), "");
+  test.end();
+});
 
-vows.describe('d3-transform').addBatch({
-  'the initial object' : {
-    topic : function() {
-      return d3Transform();
-    },
-    'is an identity transform' : function(topic) {
-      assert.equal(topic(), "");
-    }
-  },
-  'calling translate' : {
-    'works for one argument' : function() {
-      var transform = d3Transform()
-          .translate(1);
+tape('works for one argument', function(test) {
+  var tr = t.transform().translate(2);
+  test.equal(tr(), "translate(2)");
+  test.end();
+});
 
-      assert.equal(transform(), 'translate(1)');
-    },
-    'works for two arguments' : function() {
-      var transform = d3Transform()
-          .translate(1, 2);
+tape('works for two arguments', function(test) {
+  var tr = t.transform().translate(1,2);
+  test.equal(tr(), "translate(1,2)");
+  test.end();
+});
 
-      assert.equal(transform(), 'translate(1,2)');
-    },
-    'works for a function argument' : function() {
-      var transform = d3Transform()
-          .translate(function() { return [3, 5]; });
+tape('works for a function argument', function(test) {
+  var tr = t.transform().translate(function() { return [2,3]});
+  test.equal(tr(), "translate(2,3)");
+  test.end();
+});
 
-      assert.equal(transform(), 'translate(3,5)');
-    },
-    'works for a function argument, given arguments' : function() {
-      var transform = d3Transform()
-          .translate(function(x) { return [x, 13]; });
+tape('works for a function argument, given arguments', function(test) {
+  var tr = t.transform().translate(function(x) { return [x,3]});
+  test.equal(tr(8), "translate(8,3)");
+  test.end();
+});
 
-      assert.equal(transform(8), 'translate(8,13)');
-    },
-    'works for a function argument, as a method' : function() {
-      var transform = d3Transform()
-          .translate(function() { return [this.x, 34]; });
-      var cxt = { 'x' : 21 };
+tape('works for a function argument, as a method', function(test) {
+  var tr = t.transform().translate(function(x) { return [this.x,3]});
+  var cxt = { 'x': 21 };
+  test.equal(tr.call(cxt), "translate(21,3)");
+  test.end();
+});
 
-      assert.equal(transform.call(cxt), 'translate(21,34)');
-    }
-  },
-  'composing transforms' : {
-    'works' : function() {
-      var transform = d3Transform()
-          .translate(1, 1)
-          .rotate(2);
-      assert.equal(transform(), 'translate(1,1) rotate(2)');
-    }
-  },
-  'composing multiple transform objects' : {
-    'works' : function() {
-      var t1 = d3Transform()
-        .translate(1,1)
-        .rotate(2)
-      var t2 = d3Transform(t1)
-        .scale(3,3);
-      assert.equal(t2(),"translate(1,1) rotate(2) scale(3,3)");
-    },
-    'works with functions at any point' : function() {
-      var t1 = d3Transform()
-        .translate(function(d) { return [d,1];})
-        .rotate(2)
-      var t2 = d3Transform(t1)
-        .scale(function(d) { return [d+1,4];});
-      assert.equal(t2(10),"translate(10,1) rotate(2) scale(11,4)");
-    }
-  },
-  'composing via seq()' : {
-    'works' : function() {
-      var t1 = d3Transform()
-        .translate(1,1);
-      var t2 = d3Transform()
-        .translate(-1,-1);
-      var seq = t1.seq(t2);
-      assert.equal(seq(), "translate(1,1) translate(-1,-1)");
-    },
-    'works with functions' : function() { 
-      var t1 = d3Transform()
-        .translate([1,1]);
-      var t2 = d3Transform()
-        .translate(function(d) { return [1,d]; });
-      var seq = t1.seq(t2);
-      assert.equal(seq(5), "translate(1,1) translate(1,5)");
-    },
-    'works with functions at any point' : function() {
-      var t1 = d3Transform()
-        .translate(function(d) { return [d,1]; });
-      var t2 = d3Transform()
-        .translate(function(d) { return [1,d]; });
-      var seq = t1.seq(t2);
-      assert.equal(seq(5), "translate(5,1) translate(1,5)");
-    }
-  }
-}).export(module);
+tape('composes transforms works', function(test) {
+  var tr = t.transform().translate(1,1).rotate(2);
+  test.equal(tr(), 'translate(1,1) rotate(2)');
+  test.end();
+});
+
+tape('composes transforms works by passing to functor', function(test) {
+  var tr = t.transform().translate(1,1).rotate(2);
+  var tr2 = t.transform(tr).scale(2);
+  test.equal(tr2(), 'translate(1,1) rotate(2) scale(2)');
+  test.end();
+});
+
+tape('works with functions at any point', function(test) {
+  var tr = t.transform().translate(function(d) { return [d,1];}).rotate(2);
+  var tr2 = t.transform(tr).scale(function(d) { return  [d+1,4];});
+  test.equal(tr2(10), "translate(10,1) rotate(2) scale(11,4)");
+  test.end();
+});
+
+tape("composing via seq() works", function(test) {
+  var tr = t.transform().translate(1, 1);
+  var tr2 = t.transform().translate(-1, -1);
+  var seq = tr.seq(tr2);
+  test.equal(seq(), "translate(1,1) translate(-1,-1)");
+  test.end();
+});
+
+tape("composing via seq() works with functions", function(test) {
+  var tr = t.transform().translate([1,1]);
+  var tr2 = t.transform().translate(function(d) { return [1,d];});
+  var seq = tr.seq(tr2);
+  test.equal(seq(5), "translate(1,1) translate(1,5)");
+  test.end();
+});
+
+tape("composing via seq() works with functions at any point", function(test) {
+  var tr = t.transform().translate(function(d) { return [d,1];});
+  var tr2 = t.transform().translate(function(d) { return [1,d];});
+  var seq = tr.seq(tr2);
+  test.equal(seq(5), "translate(5,1) translate(1,5)");
+  test.end();
+});
