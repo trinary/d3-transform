@@ -1,12 +1,12 @@
 <html>
   <head>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
-    <script src="src/d3-transform.js"></script>
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <script src="build/d3-transform.js"></script>
   </head>
   <body>
     <svg class="example1"></svg>
     <script>
-var transform = d3.svg.transform()
+var transform = d3.transform()
     .translate(function(d) { return [20, d.size * 10] })
     .rotate(40)
     .scale(function(d) { return d.size + 2 });
@@ -23,10 +23,10 @@ console.log(svg.length);
     </script>
     <svg class="example2"></svg>
     <script>
-var transform1 = d3.svg.transform()
+var transform1 = d3.transform()
   .translate(10,20);
 
-var transform2 = d3.svg.transform(transform1)
+var transform2 = d3.transform(transform1)
   .scale(function(d) { return [d.size];})
 
 d3.select('svg.example2').selectAll('g')

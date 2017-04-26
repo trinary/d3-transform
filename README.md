@@ -1,26 +1,26 @@
 # D3-Transform
 
-d3-transform makes it easy to define and reuse functions that produce
-[transform][1] attribute strings for SVG elements. Using d3-transform reduces
+**d3-transform** makes it easy to define and reuse functions that produce
+[transform](https://developer.mozilla.org/en-US/docs/SVG/Attribute/transform) attribute strings for SVG elements. Using **d3-transform** reduces
 repetition, allows you to compose multiple transforms, and eliminates ugly
 string-interpolation from your d3 visualization code.
 
 ## Installation
 
-Include d3-transform in your web page using a script tag any time after you've
-included [d3][2]:
+Include **d3-transform** in your web page using a script tag any time after you've
+included [d3](http://d3js.org):
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
-<script src="/path/to/d3-transform.js"></script>
+<script src="http://d3js.org/d3.v4.min.js"></script>
+<script src="d3-transform.js"></script>
 ```
 
 ## Usage
 
-d3-transform replaces the manual construction of transform attribute strings
+**d3-transform** replaces the manual construction of transform attribute strings
 for SVG elements. For example, if you want to translate, rotate, and scale a
 `group` element depending on the data bound to that element, you'd write
-something like this without d3-transform:
+something like this without **d3-transform**:
 
 ```javascript
 d3.select('svg').selectAll('g')
@@ -31,10 +31,10 @@ d3.select('svg').selectAll('g')
     });
 ```
 
-With d3-transform, you can rewrite the above code like this:
+With **d3-transform**, you can rewrite the above code like this:
 
 ```javascript
-var transform = d3.svg.transform()
+var transform = d3.transform()
     .translate(function(d) { return [20, d.size * 10] })
     .rotate(40)
     .scale(function(d) { return d.size + 2 });
@@ -62,8 +62,8 @@ positional arguments. In the special case where an operation only takes one
 argument, your function can return a number.
 
 All of the SVG 1.1 transform operations are supported: `matrix`, `rotate`,
-`translate`, `scale`, `skewX`, and `skewY`. See the [SVG 1.1 Specification][5]
-or [MDN][1] for further details on the arguments of each operation.
+`translate`, `scale`, `skewX`, and `skewY`. See the [SVG 1.1 Specification](http://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#TransformAttribute)
+or [MDN](https://developer.mozilla.org/en-US/docs/SVG/Attribute/transform) for further details on the arguments of each operation.
 
 When using node.js, calls to require('d3-transform') return a direct reference to the "transform" method.
 
@@ -87,13 +87,13 @@ var svg = d3.select('svg.example1').selectAll('g')
 ### Composition
 
 If you want to extend one transform with another set of operations, pass the
-initial transform object into the `d3.svg.transform()` function:
+initial transform object into the `d3.transform()` function:
 
 ```javascript
-var transform1 = d3.svg.transform()
+var transform1 = d3.transform()
   .translate(10,20);
 
-var transform2 = d3.svg.transform(transform1)
+var transform2 = d3.transform(transform1)
   .scale(function(d) { return [d.size];})
 
 d3.select('svg.example2').selectAll('g')
@@ -106,10 +106,10 @@ Another way to compose multiple transform objects is to use the `seq`
 operation:
 
 ```javascript
-var transform1 = d3.svg.transform()
+var transform1 = d3.transform()
   .translate(10,20);
 
-var transform2 = d3.svg.transform()
+var transform2 = d3.transform()
   .scale(function(d) { return [d.size];})
 
 var transform =
@@ -127,15 +127,6 @@ With either of these approaches, the result is a document that looks like this:
 
 ## Contributors
 
-* Erik Cunningham ([@trinary][3])
-* Spiros Eliopoulos ([@seliopou][4])
-
-## License
-
-MIT, see LICENSE.txt for details.
-
-[1]: https://developer.mozilla.org/en-US/docs/SVG/Attribute/transform "Transform://developer.mozilla.org/en-US/docs/SVG/Attribute/transform "Transform"
-[2]: http://d3js.org
-[3]: https://twitter.com/trinary
-[4]: https://twitter.com/seliopou
-[5]: http://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#TransformAttribute
+* Erik Cunningham [@trinary](https://twitter.com/trinary)
+* Spiros Eliopoulos [@seliopou](https://twitter.com/seliopou)
+* Micah Stubbs [@micahstubbs](https://twitter.com/micahstubbs)

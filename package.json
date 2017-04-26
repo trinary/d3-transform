@@ -1,13 +1,18 @@
 {
   "name": "d3-transform",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "addon to d3.js that wraps SVG transforms into an API",
-  "main": "src/d3-transform.js",
+  "main": "build/d3-transform.js",
+  "module": "build/d3-transform.mjs",
+  "jsnext:main": "index",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "vows"
+    "test": "tape 'test/**/*-test.js'",
+    "pretest": "rm -rf build && mkdir build && rollup -c",
+    "prepublish": "npm run test && uglifyjs build/d3-transform.js -c -m -o build/d3-transform.min.js",
+    "postpublish": "zip -j build/d3-transform.zip -- LICENSE README.md build/d3-transform.js build/d3-transform.min.js"
   },
   "repository": {
     "type": "git",
@@ -18,13 +23,21 @@
     "d3.js",
     "transform",
     "translate",
-    "rotate"
+    "rotate",
+    "scale"
   ],
   "author": "Erik Cunningham <djtrinary@gmail.com>",
   "license": "MIT",
   "gitHead": "794cb60372515943256c5ca6f2d9ae2ba57ab0be",
   "readmeFilename": "README.md",
   "devDependencies": {
-    "vows": "~0.7.0"
-  }
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babelrc-rollup": "^3.0.0",
+    "rollup": "^0.41.6",
+    "rollup-plugin-babel": "^2.7.1",
+    "tape": "4",
+    "uglify-js": "2"
+  },
+  "dependencies": {}
 }
